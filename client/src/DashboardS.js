@@ -51,7 +51,7 @@ function DashboardS(props) {
     const Deliver = (orderid, orderno) => {
         console.log('delivered');
         console.log(orderid, orderno);
-        //call the upsert endpoint from here and change the delivered value     
+        axios.post('http://localhost:5000/deliverItem',{oid:orderid, ono:orderno}).then(res => {console.log(res)}).catch(err=>{console.log(err)})     
     }
 
     // const [loginData, setLoginData] = useState(null);

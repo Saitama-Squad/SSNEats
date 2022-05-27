@@ -84,9 +84,22 @@ app.get("/getOrder", (req, res) => {
 
 // })
 
+app.post("/deliverItem", (req, res) => {
+  console.log(`Delivering Item ${req.body.oid}`);
+  OrderModel.updateOne(
+    {_id: req.body.oid},
+    { delivered: true },
+    (callback = (err, doc) => {
+      if (err) {console.log(err);res.status(500)}
+      else {console.log(doc)
+      res.status(200).json({statusText:"success"})}
+    })
+  );
+});
 
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`Server is ready at http://localhost:${process.env.PORT || 5000}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is ready at http://localhost:${PORT}`);
 });
 
 

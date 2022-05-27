@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Cart() {
 
@@ -14,7 +16,32 @@ function Cart() {
     //count of each items
     console.log(location.state.count);
 
+    const orderlist = [];
+
     var price = 0;
+    var orderno = "";
+
+    const makeOrder = () => {
+        console.log("Making payment now");
+        //console.log(orderlist);
+        orderno = String(parseInt(new Date().getTime() / 100));  //i am aware that 1000 ms = 1sec
+        orderno = orderno.slice(-5);  //stores deci second also, to handle same second orders
+        console.log("order no: ", orderno);   //this needs to be in the qr code
+
+        axios.post('http://localhost:5000/makeOrder/', {
+            'items': orderlist,
+            'ordertime': parseInt(new Date().getTime() / 1000),  //this is in second after 1970
+            'orderno': orderno,
+            'delivered': false
+        })
+            .then(response => {
+                console.log(response);
+                window.alert('Order placed successfully!');
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     return (
         <div>
@@ -39,6 +66,12 @@ function Cart() {
                     const quant = location.state.count[index];
 
                     if (quant) {
+                        value.count = quant;
+                        const newobj = JSON.stringify(value);
+                        // console.log(newobj);
+
+                        orderlist.push(value);
+
                         price += value["price"] * quant;
                         return (
                             <div className='flex flex-row mx-auto font-sans text-xl hover:text-2xl transition-all hover:bg-green-100 rounded-lg w-10/12'>
@@ -70,7 +103,6 @@ function Cart() {
                         )
                     }
                 })
-
             }
 
             <hr className='m-5'></hr>
@@ -84,9 +116,17 @@ function Cart() {
                 </div>
             </div>
 
+            {/* <Link to={{
+                pathname: "/QR",
+                state: {
+                    orderno: orderno,
+                }
+            }} > */}
             <div className='text-center m-8'>
-                <button className="rounded-full border-4 text-lg border-rose-500 p-4 hover:bg-green-500 hover:text-white hover:border-green-800 hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-200 hover:font-semibold">Confirm and Pay</button>
+                <button className="rounded-full border-4 text-lg border-rose-500 p-4 hover:bg-green-500 hover:text-white hover:border-green-800 hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-200 hover:font-semibold" onClick={() => makeOrder()}>Confirm and Pay</button>
             </div>
+            {/* </Link> */}
+
 
         </div>
     )

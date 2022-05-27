@@ -44,7 +44,6 @@ function DashboardC(props) {
     };
 
     const itemPick = (item) => {
-
         setTotal(total + 1);
         console.log('picked: ' + item.name);
         if (setMenuCount[item.name] === undefined)
@@ -135,8 +134,6 @@ function DashboardC(props) {
                         </div>
                     )
             }
-
-
         </div >
     )
 

@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import DashboardC from './DashboardC';
 import DashboardS from './DashboardS';
 import Cart from './Cart';
+import QR from './QR';
 
 function Home() {
 
@@ -31,6 +32,9 @@ function Home() {
         <Route exact path="/dashboardS" component={DashboardS} />
 
         <Route exact path="/cart" component={Cart} />
+
+        <Route exact path="/qr" component={QR} />
+
       </Switch>
     </Router>
   );

@@ -7,7 +7,6 @@ import { Redirect } from 'react-router-dom';
 import AsyncLocalStorage from '@createnextapp/async-local-storage';
 import axios from 'axios';
 
-
 function DashboardS(props) {
 
     const sendItem = () => {
@@ -30,6 +29,29 @@ function DashboardS(props) {
         setCategory('');
         setVegetarian(1);
         alert("Item added");
+    }
+
+    const [orderList, setOrderList] = useState([]);
+    const [display, setDisplay] = useState(false);
+
+    const showOrder = () => {
+        console.log('showing order');
+        axios.get('http://localhost:5000/getOrder')
+            .then(response => {
+                setOrderList(response.data);
+                console.log(orderList);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        setDisplay(true);
+    }
+
+    const Deliver = (orderid, orderno) => {
+        console.log('delivered');
+        console.log(orderid, orderno);
+        //call the upsert endpoint from here and change the delivered value     
     }
 
     // const [loginData, setLoginData] = useState(null);
@@ -83,13 +105,56 @@ function DashboardS(props) {
                             <select onChange={(e) => setVegetarian(parseInt(e.target.value))}>
                                 <option value='1' >Vegetarian</option>
                                 <option value='0'>Non-Vegetarian</option>
-                            </select></div>
-
-                        <div className='mx-auto w-0'>
-                            <button className=" w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => sendItem()}>
+                            </select>
+                            <br></br>
+                            <button className="text-center w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mx-auto" onClick={() => sendItem()}>
                                 Add Items
                             </button>
                         </div>
+
+                        <div className='mx-auto w-0 mt-5'>
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => showOrder()}>
+                                Show Orders
+                            </button>
+                        </div>
+
+                        {
+                            display ? (
+                                <div>
+                                    {
+                                        orderList.map((order) => {
+                                            //console.log(order);
+
+                                            if (order["delivered"] == false) {
+                                                return (
+                                                    <div className='mx-auto w-1/2'>
+                                                        <div className='bg-amber-300 border-2 backdrop-blur-0 m-4 rounded-md hover:bg-amber-500 p-1 hover:scale-105 transition ease-in-out duration-200'>
+                                                            <button className='float-right bg-red-500 text-white font-bold rounded m-3 p-1 hover:scale-105 hover:bg-green-200 hover:text-black' onClick={() => Deliver(order["_id"], order["orderno"])}>
+                                                                Deliver Order
+                                                            </button>
+                                                            <div className='text-xl'>{order["orderno"]}</div>
+
+                                                            {order["items"].map((item) => {
+                                                                return (
+                                                                    <div>
+
+                                                                        <div>{item["name"]} -   {item["count"]}</div>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </div>
+
+
+                                                )
+                                            }
+
+                                        })
+                                    }
+                                </div>
+                            ) :
+                                <h2>Nope</h2>
+                        }
                     </div >
                 ) :
                     (

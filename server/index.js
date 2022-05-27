@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const { OAuth2Client } = require('google-auth-library');
 const mongoose = require('mongoose');
 const MenuModel = require('./models/menu');
+const OrderModel = require('./models/order');
 dotenv.config();
 
 mongoose.connect("mongodb+srv://soorya99:Soorya123@cluster0.6vtcq.mongodb.net/SSNEats?retryWrites=true&w=majority");
@@ -57,6 +58,31 @@ app.post("/addItem", async (req, res) => {
     await newItem.save();
     res.json(item);
 });
+
+
+app.post("/makeOrder", async (req, res) => {
+    const item = req.body;
+    const orderItem = new OrderModel(item);
+    await orderItem.save();
+    res.json(item);
+});
+
+
+app.get("/getOrder", (req, res) => {
+    console.log('getting Menu')
+    OrderModel.find({}, (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// app.upsert("/deliverOrder", (req, res) => {
+//     console.log('deliver order');
+
+// })
 
 
 app.listen(process.env.PORT || 5000, () => {

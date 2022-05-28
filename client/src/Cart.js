@@ -5,6 +5,9 @@ import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+//import QRCode from "react-qr-code";
+import QRCode from 'qrcode.react';
+import { useState } from 'react'
 
 function Cart() {
 
@@ -31,16 +34,24 @@ function Cart() {
         axios.post('http://localhost:5000/makeOrder/', {
             'items': orderlist,
             'ordertime': parseInt(new Date().getTime() / 1000),  //this is in second after 1970
-            'orderno': orderno,
+            'orderno': parseInt(orderno),
             'delivered': false
         })
             .then(response => {
                 console.log(response);
                 window.alert('Order placed successfully!');
+                var hidden = document.createElement('a')
+                console.log(orderno)
+                hidden.href = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${orderno}`
+                hidden.download = true
+                hidden.click()
             })
             .catch(error => {
                 console.log(error)
             })
+
+        //generate and download qr code
+
     }
 
     return (
@@ -116,17 +127,9 @@ function Cart() {
                 </div>
             </div>
 
-            {/* <Link to={{
-                pathname: "/QR",
-                state: {
-                    orderno: orderno,
-                }
-            }} > */}
             <div className='text-center m-8'>
                 <button className="rounded-full border-4 text-lg border-rose-500 p-4 hover:bg-green-500 hover:text-white hover:border-green-800 hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-200 hover:font-semibold" onClick={() => makeOrder()}>Confirm and Pay</button>
             </div>
-            {/* </Link> */}
-
 
         </div>
     )

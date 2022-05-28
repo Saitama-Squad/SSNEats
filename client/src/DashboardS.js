@@ -51,7 +51,7 @@ function DashboardS(props) {
     const Deliver = (orderid, orderno) => {
         console.log('delivered');
         console.log(orderid, orderno);
-        axios.post('http://localhost:5000/deliverItem',{oid:orderid, ono:orderno}).then(res => {console.log(res)}).catch(err=>{console.log(err)})     
+        axios.post('http://localhost:5000/deliverItem', { oid: orderid, ono: orderno }).then(res => { console.log(res) }).catch(err => { console.log(err) })
     }
 
     // const [loginData, setLoginData] = useState(null);
@@ -137,7 +137,6 @@ function DashboardS(props) {
                                                             {order["items"].map((item) => {
                                                                 return (
                                                                     <div>
-
                                                                         <div>{item["name"]} -   {item["count"]}</div>
                                                                     </div>
                                                                 )

@@ -5,8 +5,10 @@
   "private": true,
   "dependencies": {
     "@createnextapp/async-local-storage": "^1.0.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@popperjs/core": "^2.11.5",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -19,10 +21,14 @@
     "qrcode.react": "^3.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-font": "^1.2.1",
     "react-google-login": "^5.2.2",
     "react-qr-code": "^2.0.7",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
+    "react-tsparticles": "^2.0.6",
+    "styled-components": "^5.3.5",
+    "tsparticles": "^2.0.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

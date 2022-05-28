@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import students from "./assets/students.jpeg";
 import Font from 'react-font'
 export const CardContainer = styled.div`
-  height: 500px;
+  height: 470px;
   border-radius: 10px;
   width: 400px;
   background-color: white;
   padding: 5px;
   &:hover {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    width: 450px;
-    height: 562px;
+    width: 430px;
+    height: 500px;
   }
   margin-right: 5vw;
 `;
@@ -37,7 +37,7 @@ export const Heading = styled.h1`
   margin-top: 20px;
 `;
 export const SubHead = styled.h1`
-  font-size: 40px;
+  font-size: 30px;
   color: white;
   font-weight: bold;
 `;
@@ -48,7 +48,7 @@ function Navbar(props) {
             <Heading align="center">SSNEats</Heading>
           </Font>
             <div>
-            <div className="pt-10 mb-16 font-sans text-3xl text-center font-semibold">
+            <div className="pt-10 mb-10 font-sans text-3xl text-center font-semibold">
               <Font family="Ultra">
                 <SubHead>Continue As</SubHead>
               </Font>

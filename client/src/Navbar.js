@@ -4,7 +4,7 @@ import canteen from "./assets/canteen.jpeg";
 import styled from 'styled-components';
 import students from "./assets/students.jpeg";
 import Font from 'react-font'
-const CardContainer = styled.div`
+export const CardContainer = styled.div`
   height: 500px;
   border-radius: 10px;
   width: 400px;
@@ -17,27 +17,26 @@ const CardContainer = styled.div`
   }
   margin-right: 5vw;
 `;
-const Text = styled.h1`
-  diplay: flex;
+export const Text = styled.h1`
   font-size: 25px;
   font-weight: 300;
   margin-left: 50px;
   margin-top: 20px;
 `
-const Texts = styled.h1`
+export const Texts = styled.h1`
   font-size: 25px;
   font-weight: 300;
   margin-left: 125px;
   margin-top: 80px;
 `
-const Heading = styled.h1`
+export const Heading = styled.h1`
   font-size: 70px;
   font-weight: 500;
   color: white;
   text-align: center;
   margin-top: 20px;
 `;
-const SubHead = styled.h1`
+export const SubHead = styled.h1`
   font-size: 40px;
   color: white;
   font-weight: bold;
@@ -51,7 +50,7 @@ function Navbar(props) {
             <div>
             <div className="pt-10 mb-16 font-sans text-3xl text-center font-semibold">
               <Font family="Ultra">
-                <SubHead>Login</SubHead>
+                <SubHead>Continue As</SubHead>
               </Font>
             </div>
             <div className="flex justify-center">

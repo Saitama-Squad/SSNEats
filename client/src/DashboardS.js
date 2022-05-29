@@ -7,7 +7,14 @@ import { Redirect } from "react-router-dom";
 import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import axios from "axios";
 import { Input } from "antd";
-
+import { Tabs } from "antd";
+import styled from 'styled-components';
+const { TabPane } = Tabs;
+const Topper = styled.div`
+  position: sticky;
+  top:0;
+  background-color: white;
+`;
 function DashboardS(props) {
   const sendItem = () => {
     console.log(name, price, category, vegetarian);
@@ -33,8 +40,8 @@ function DashboardS(props) {
   };
 
   const [orderList, setOrderList] = useState([]);
-  const [display, setDisplay] = useState(false);
-
+  const [display, setDisplay] = useState(0);
+  const [reload,setReload] = useState(true);
   const showOrder = () => {
     console.log("showing order");
     axios
@@ -47,7 +54,7 @@ function DashboardS(props) {
         console.log(error);
       });
 
-    setDisplay(true);
+    setDisplay(1);
   };
 
   const Deliver = (orderid, orderno) => {
@@ -57,12 +64,17 @@ function DashboardS(props) {
       .post("http://localhost:5000/deliverItem", { oid: orderid, ono: orderno })
       .then((res) => {
         console.log(res);
+        setDisplay(2);
+        setReload(!reload);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  useEffect(()=>{
+    showOrder();
+    setDisplay(1);
+  },[reload]);
   // const [loginData, setLoginData] = useState(null);
   console.log(props);
   const [loginData, setLoginData] = useState(null);
@@ -88,98 +100,138 @@ function DashboardS(props) {
     <div>
       {loginData ? (
         <div>
-          <div class="m-auto w-full max-w-xl mt-20">
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-              <h1 className="text-center font-bold text-2xl">Add Item</h1>
-              <div class="mb-4">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="itemname"
+          <Topper class="bg-white text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+            <ul class="flex flex-wrap -mb-px">
+              {display==0 ? (
+                <>
+                  <li class="mr-2">
+                    <button
+                      class="inline-block p-4 active text-blue-600 border-blue-600 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                      onClick={() => {
+                        setDisplay(0);
+                      }}
+                    >
+                      Add Items to Menu
+                    </button>
+                  </li>
+                  <li class="mr-2">
+                    <button
+                      class="inline-block p-4 rounded-t-lg border-b-2 dark:text-blue-500 dark:border-blue-500"
+                      onClick={() => showOrder()}
+                    >
+                      Show Orders
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li class="mr-2">
+                    <button
+                      class="inline-block p-4 rounded-t-lg border-b-2 dark:text-blue-500 dark:border-blue-500"
+                      onClick={() => {
+                        setDisplay(0);
+                      }}
+                    >
+                      Add Items to Menu
+                    </button>
+                  </li>
+                  <li class="mr-2">
+                    <button
+                      class="inline-block p-4 active text-blue-600 border-blue-600 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                      onClick={() => showOrder()}
+                    >
+                      Show Orders
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          </Topper>
+          {display==0 ? (
+            <div class="m-auto w-full max-w-xl mt-20">
+              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <h1 className="text-center font-bold text-2xl">Add Item</h1>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="itemname"
+                  >
+                    Item Name
+                  </label>
+                  <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="grid-first-name"
+                    type="text"
+                    placeholder="Item"
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="price"
+                  >
+                    Price
+                  </label>
+                  <input
+                    class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    id="grid-first-name"
+                    type="number"
+                    placeholder="00"
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    for="category"
+                  >
+                    Category
+                  </label>
+                  <input
+                    class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    id="grid-first-name"
+                    type="text"
+                    placeholder="Starters"
+                    onChange={(e) => setCategory(e.target.value)}
+                    value={category}
+                  ></input>
+                </div>
+                <div
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  for="grid-first-name"
                 >
-                  Item Name
-                </label>
-                <input
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder="Item"
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
-                />
-              </div>
-              <div class="mb-6">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="price"
+                  Veg /Non Veg
+                </div>
+                <select
+                  onChange={(e) => setVegetarian(parseInt(e.target.value))}
                 >
-                  Price
-                </label>
-                <input
-                  class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="grid-first-name"
-                  type="number"
-                  placeholder="00"
-                  onChange={(e) => setPrice(e.target.value)}
-                  value={price}
-                />
-              </div>
-              <div class="mb-6">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="category"
-                >
-                  Category
-                </label>
-                <input
-                  class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder="Starters"
-                  onChange={(e) => setCategory(e.target.value)}
-                  value={category}
-                ></input>
-              </div>
-              <div
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="grid-first-name"
-              >
-                Veg /Non Veg
-              </div>
-              <select onChange={(e) => setVegetarian(parseInt(e.target.value))}>
-                <option value="1">Vegetarian</option>
-                <option value="0">Non-Vegetarian</option>
-              </select>
-              <br />
-              <br />
-              <div class="flex items-center justify-between">
-                <button
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
-                  onClick={() => sendItem()}
-                >
-                  Add Items
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="mx-auto w-0 mt-5">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => showOrder()}
-            >
-              Show Orders
-            </button>
-          </div>
-
-          {display ? (
+                  <option value="1">Vegetarian</option>
+                  <option value="0">Non-Vegetarian</option>
+                </select>
+                <br />
+                <br />
+                <div class="flex items-center justify-between">
+                  <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                    onClick={() => sendItem()}
+                  >
+                    Add Items
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : null}
+          {display==1 ? (
             <div>
               {orderList.map((order) => {
-                //console.log(order);
-
                 if (order["delivered"] == false) {
                   return (
                     <div className="mx-auto w-1/2">
-                      <div className="bg-amber-300 border-2 backdrop-blur-0 m-4 rounded-md hover:bg-amber-500 p-1 hover:scale-105 transition ease-in-out duration-200">
+                      <div className="bg-white border-2 backdrop-blur-0 m-4 rounded-md hover:bg-white p-1 hover:scale-105 transition ease-in-out duration-200">
                         <button
                           className="float-right bg-red-500 text-white font-bold rounded m-3 p-1 hover:scale-105 hover:bg-green-200 hover:text-black"
                           onClick={() =>
@@ -205,9 +257,7 @@ function DashboardS(props) {
                 }
               })}
             </div>
-          ) : (
-              null
-          )}
+          ) : null}
         </div>
       ) : (
         <div>

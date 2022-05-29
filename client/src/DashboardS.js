@@ -8,13 +8,19 @@ import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import axios from "axios";
 import { Input } from "antd";
 import { Tabs } from "antd";
-import styled from 'styled-components';
+import styled from "styled-components";
 const { TabPane } = Tabs;
 const Topper = styled.div`
   position: sticky;
-  top:0;
+  top: 0;
   background-color: white;
 `;
+const Buttons = styled.button`
+  margin-left: auto;
+  margin-right: 0;
+  background-color: #b20a2c;
+  border-radius: 10px;
+`
 function DashboardS(props) {
   const sendItem = () => {
     console.log(name, price, category, vegetarian);
@@ -41,7 +47,7 @@ function DashboardS(props) {
 
   const [orderList, setOrderList] = useState([]);
   const [display, setDisplay] = useState(0);
-  const [reload,setReload] = useState(true);
+  const [reload, setReload] = useState(true);
   const showOrder = () => {
     console.log("showing order");
     axios
@@ -71,10 +77,10 @@ function DashboardS(props) {
         console.log(err);
       });
   };
-  useEffect(()=>{
+  useEffect(() => {
     showOrder();
     setDisplay(1);
-  },[reload]);
+  }, [reload]);
   // const [loginData, setLoginData] = useState(null);
   console.log(props);
   const [loginData, setLoginData] = useState(null);
@@ -102,7 +108,7 @@ function DashboardS(props) {
         <div>
           <Topper class="bg-white text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px">
-              {display==0 ? (
+              {display == 0 ? (
                 <>
                   <li class="mr-2">
                     <button
@@ -145,9 +151,22 @@ function DashboardS(props) {
                   </li>
                 </>
               )}
+              <li className="ml-auto mr-6 flex flex-col items-end justify-center">
+                <Buttons
+                  className="mt-3 p-3 text-white hover:bg-red-600 outline-2 hover:outline-yellow-600"
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </Buttons>
+                <h3 className="">
+                  {JSON.parse(localStorage.getItem("loginData")).email}
+                </h3>
+              </li>
             </ul>
           </Topper>
-          {display==0 ? (
+          {display == 0 ? (
             <div class="m-auto w-full max-w-xl mt-20">
               <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h1 className="text-center font-bold text-2xl">Add Item</h1>
@@ -225,7 +244,7 @@ function DashboardS(props) {
               </form>
             </div>
           ) : null}
-          {display==1 ? (
+          {display == 1 ? (
             <div>
               {orderList.map((order) => {
                 if (order["delivered"] == false) {

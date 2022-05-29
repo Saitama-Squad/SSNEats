@@ -1,12 +1,47 @@
 import { Button } from 'bootstrap';
 import React, { Component, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import AsyncLocalStorage from '@createnextapp/async-local-storage';
 import axios from 'axios';
 import Cart from './Cart';
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import styled from "styled-components";
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+  
+const  CartDiv = styled.div`
+    position: relative;
+    display: block;
+    width: 28px;
+    height: 28px;
+    height: auto;
+    margin-left: auto;
+    margin-right: 20px;
+    overflow: hidden;
+    .material-icons {
+      position: relative;
+      top: 4px;
+      z-index: 1;
+      font-size: 24px;
+      color: white;
+    }
+    `
+const  CartSpan = styled.span`
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      font-size: 11px;
+      border-radius: 50%;
+      background: #d60b28;
+      width: 16px;
+      height: 16px;
+      line-height:16px;
+      display: block;
+      text-align: center;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+    `
 function DashboardC(props) {
 
     // const [loginData, setLoginData] = useState(null);
@@ -73,9 +108,10 @@ function DashboardC(props) {
                                 count: Object.values(setMenuCount)
                             }
                         }} >
-                            <div className="w-32 ...">
-                                <button className="m-3 bg-red-500 text-white hover:bg-red-700 rounded-full outline-2 hover:outline-yellow-600 absolute top-0 right-0 h-16 w-16 ..." >cart: {total}</button>
-                            </div>
+                            <CartDiv>
+                                <CartSpan>{total}</CartSpan>
+                                <span className='mr-10'><FontAwesomeIcon size='x' icon={faShoppingCart} /></span>
+                            </CartDiv>
                         </Link>
 
                         <div className='mx-auto w-fit mt-4'>
@@ -103,7 +139,7 @@ function DashboardC(props) {
 
                                     if (item.category == category || category == "All") {
                                         return (
-                                            <div className='mx-auto w-2/5 h-24 bg-amber-300 border-2 backdrop-blur-0 m-4 rounded-md hover:bg-amber-500 p-1 hover:scale-105 transition ease-in-out duration-200' onClick={() => { itemPick(item) }}>
+                                            <div className='mx-auto w-2/3 h-24 bg-white border-2 backdrop-blur-0 m-4 rounded-md hover:bg-white px-10 py-2 hover:scale-105 transition ease-in-out duration-200' onClick={() => { itemPick(item) }}>
                                                 <div className='text-xl float-right'> {item.price}.00</div>
                                                 < div className='text-xl inline' > {item.name} </div>
                                                 {

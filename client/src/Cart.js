@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 //import QRCode from "react-qr-code";
 import QRCode from 'qrcode.react';
-import { useState } from 'react'
+import { useState } from 'react';
 
 function Cart() {
 

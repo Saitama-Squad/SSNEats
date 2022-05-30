@@ -7,8 +7,8 @@ import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-  
-const  CartDiv = styled.div`
+
+const CartDiv = styled.div`
     position: relative;
     display: block;
     width: 28px;
@@ -25,7 +25,7 @@ const  CartDiv = styled.div`
       color: white;
     }
     `
-const  CartSpan = styled.span`
+const CartSpan = styled.span`
       position: absolute;
       top: 0;
       right: 0;

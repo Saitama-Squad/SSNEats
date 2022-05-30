@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import canteen from "./assets/canteen.jpeg";
 import styled from 'styled-components';
 import students from "./assets/students.jpeg";
@@ -42,39 +42,39 @@ export const SubHead = styled.h1`
   font-weight: bold;
 `;
 function Navbar(props) {
-    return (
-        <div>
-          <Font family='Monoton'>
-            <Heading align="center">SSNEats</Heading>
+  return (
+    <div>
+      <Font family='Monoton'>
+        <Heading align="center">SSNEats</Heading>
+      </Font>
+      <div>
+        <div className="pt-10 mb-10 font-sans text-3xl text-center font-semibold">
+          <Font family="Ultra">
+            <SubHead>Continue As</SubHead>
           </Font>
-            <div>
-            <div className="pt-10 mb-10 font-sans text-3xl text-center font-semibold">
-              <Font family="Ultra">
-                <SubHead>Continue As</SubHead>
-              </Font>
-            </div>
-            <div className="flex justify-center">
-            <Link to="/shop">
+        </div>
+        <div className="flex justify-center">
+          <Link to="/shop">
             <CardContainer>
               <img src={canteen} alt="canteen" />
               <Font family='Ultra'>
                 <Text>Food Court Owner</Text>
               </Font>
             </CardContainer>
-            </Link>
+          </Link>
 
-            <Link to="/user">
+          <Link to="/user">
             <CardContainer>
-              <img src={students} alt="students"/>
+              <img src={students} alt="students" />
               <Font family='Ultra'>
                 <Texts>Students</Texts>
               </Font>
             </CardContainer>
-            </Link>
-            </div>
-            </div>
+          </Link>
         </div>
-    )   
+      </div>
+    </div>
+  )
 }
 
 export default Navbar;

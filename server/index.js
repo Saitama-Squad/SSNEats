@@ -85,16 +85,18 @@ app.get("/getOrder", (req, res) => {
 // })
 
 app.post("/deliverItem", (req, res) => {
-  console.log(`Delivering Item ${req.body.oid}`);
-  OrderModel.updateOne(
-    {_id: req.body.oid},
-    { delivered: true },
-    (callback = (err, doc) => {
-      if (err) {console.log(err);res.status(500)}
-      else {console.log(doc)
-      res.status(200).json({statusText:"success"})}
-    })
-  );
+    console.log(`Delivering Item ${req.body.oid}`);
+    OrderModel.updateOne(
+        { _id: req.body.oid },
+        { delivered: true },
+        (callback = (err, doc) => {
+            if (err) { console.log(err); res.status(500) }
+            else {
+                console.log(doc)
+                res.status(200).json({ statusText: "success" })
+            }
+        })
+    );
 });
 
 const PORT = process.env.PORT || 5000;

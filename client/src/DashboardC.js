@@ -6,7 +6,7 @@ import Cart from './Cart';
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 const CartDiv = styled.div`
     position: relative;
@@ -82,10 +82,22 @@ function DashboardC(props) {
         setTotal(total + 1);
         console.log('picked: ' + item.name);
         if (setMenuCount[item.name] === undefined)
-            setMenuCount[item.name] = 1;
+            setMenuCount[item.name] = 0;
         else
-            setMenuCount[item.name] = 1 + setMenuCount[item.name];
-        //console.log(setMenuCount[item.name]);
+            setMenuCount[item.name] = setMenuCount[item.name] + 1;
+        console.log(setMenuCount[item.name]);
+    };
+
+    const removeItem = (item) => {
+        if (total > 0)
+            setTotal(total - 1);
+        console.log('removed: ' + item.name);
+        if (setMenuCount[item.name] === undefined)
+            setMenuCount[item.name] = 0;
+        else if (setMenuCount[item.name] > 0)
+            setMenuCount[item.name] = setMenuCount[item.name] - 1;
+        console.log(setMenuCount[item.name]);
+        item.stopPropagation();
     };
 
     const openCart = () => {
@@ -110,7 +122,7 @@ function DashboardC(props) {
                         }} >
                             <CartDiv>
                                 <CartSpan>{total}</CartSpan>
-                                <span className='mr-10'><FontAwesomeIcon size='x' icon={faShoppingCart} /></span>
+                                <span className='mr-5 '><FontAwesomeIcon size='xl' color='white' icon={faShoppingCart} /></span>
                             </CartDiv>
                         </Link>
 
@@ -139,7 +151,7 @@ function DashboardC(props) {
 
                                     if (item.category == category || category == "All") {
                                         return (
-                                            <div className='mx-auto w-2/3 h-24 bg-white border-2 backdrop-blur-0 m-4 rounded-md hover:bg-white px-10 py-2 hover:scale-105 transition ease-in-out duration-200' onClick={() => { itemPick(item) }}>
+                                            <div className='mx-auto w-2/3 h-24 bg-white border-2 backdrop-blur-0 m-4 rounded-md hover:bg-white px-10 py-2 hover:scale-105 transition ease-in-out duration-200' onClick={(event) => event.currentTarget == event.target && itemPick(item)}>
                                                 <div className='text-xl float-right'> {item.price}.00</div>
                                                 < div className='text-xl inline' > {item.name} </div>
                                                 {
@@ -152,8 +164,13 @@ function DashboardC(props) {
                                                             <FontAwesomeIcon icon={faSquare} />
                                                         </div>
                                                 }
+
                                                 <div className='text-zinc-800 italic'>{item.category}</div>
-                                                <div className='mb-0 p-0 text-xl float-right'> Q: {setMenuCount[item.name]} </div>
+                                                <div className='p-0 mb-5 ml-2 text-xl float-right'> Q: {setMenuCount[item.name]} </div>
+                                                <CartDiv onClick={() => { removeItem(item) }}>
+                                                    <span><FontAwesomeIcon size='xl' color='red' icon={faArrowDown} /></span>
+                                                </CartDiv>
+
                                             </div>
                                         )
                                     }

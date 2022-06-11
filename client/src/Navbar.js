@@ -16,6 +16,7 @@ export const CardContainer = styled.div`
     height: 500px;
   }
   margin-right: 5vw;
+  margin-bottom: 100px;
 `;
 export const Text = styled.h1`
   font-size: 25px;

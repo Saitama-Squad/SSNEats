@@ -85,7 +85,7 @@ function Cart() {
 
                         price += value["price"] * quant;
                         return (
-                            <div className='flex flex-row mx-auto font-sans text-xl hover:text-2xl transition-all hover:bg-green-100 rounded-lg w-10/12'>
+                            <div className='flex flex-row mx-auto font-sans text-xl hover:text-2xl transition-all hover:bg-green-100 text-white hover:text-black rounded-lg w-10/12'>
                                 <div className='basis-2/4 p-5 justify-center'>
                                     {
                                         value["vegetarian"] ?
@@ -118,7 +118,7 @@ function Cart() {
 
             <hr className='m-5'></hr>
 
-            <div className='flex flex-row mx-auto font-sans text-2xl hover:text-3xl transition-all hover:bg-green-300 w-10/12 rounded-lg'>
+            <div className='flex flex-row mx-auto font-sans text-2xl hover:text-3xl transition-all hover:bg-green-300 w-10/12 rounded-lg text-white hover:text-black'>
                 <div className='basis-3/4 p-5'>
                     Total:
                 </div>
@@ -128,7 +128,7 @@ function Cart() {
             </div>
 
             <div className='text-center m-8'>
-                <button className="rounded-full border-4 text-lg border-rose-500 p-4 hover:bg-green-500 hover:text-white hover:border-green-800 hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-200 hover:font-semibold" onClick={() => makeOrder()}>Confirm and Pay</button>
+                <button className="rounded-full border-4 text-lg border-rose-500 p-4 hover:bg-green-500 text-white hover:border-green-800 hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-200 hover:font-semibold" onClick={() => makeOrder()}>Confirm and Pay</button>
             </div>
 
         </div>
